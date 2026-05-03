@@ -44,7 +44,6 @@ export default function ShippingChart({ data, delay = 0 }: ShippingChartProps) {
             <XAxis dataKey="name" tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <YAxis tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 42, 75, 0.1)' }} />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#ffffff' }} />
             <Bar dataKey="count" name="Orders" radius={[4, 4, 0, 0]} maxBarSize={40}>
               {data.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} fillOpacity={0.8} />

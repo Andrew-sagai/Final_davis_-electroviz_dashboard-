@@ -1,12 +1,11 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { LayoutDashboard, Users, ShoppingBag, Download, RotateCcw, Sparkles, Layers } from 'lucide-react';
+import { LayoutDashboard, Users, ShoppingBag, Sparkles, Layers } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
-import { exportToCSV } from '../../utils/analytics';
 
 export default function Navbar() {
-  const { isSimpleMode, toggleSimpleMode, filteredData, resetFilters } = useAppStore();
+  const { isSimpleMode, toggleSimpleMode } = useAppStore();
   const location = useLocation();
 
   const navItems = [
@@ -70,39 +69,6 @@ export default function Navbar() {
 
         {/* Actions */}
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={resetFilters}
-            title="Reset Filters"
-            style={{
-              background: 'rgba(255, 42, 75, 0.1)',
-              border: '1px solid var(--glass-border)',
-              borderRadius: 8, padding: '8px 12px',
-              color: 'var(--text-secondary)', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 6, fontSize: 12,
-            }}
-          >
-            <RotateCcw size={14} />
-            <span>Reset</span>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => exportToCSV(filteredData, 'electronics_sales_export.csv')}
-            title="Export CSV"
-            style={{
-              background: 'rgba(255, 184, 0, 0.1)',
-              border: '1px solid rgba(255, 184, 0, 0.2)',
-              borderRadius: 8, padding: '8px 12px',
-              color: 'var(--accent-gold)', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', gap: 6, fontSize: 12,
-            }}
-          >
-            <Download size={14} />
-            <span>Export</span>
-          </motion.button>
 
           <motion.button
             whileHover={{ scale: 1.05 }}

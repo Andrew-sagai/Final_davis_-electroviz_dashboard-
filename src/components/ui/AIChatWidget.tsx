@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Sparkles, Settings, Check, AlertCircle, RefreshCw } from 'lucide-react';
 import { useAppStore } from '../../store/useAppStore';
 import { useAIStore } from '../../store/useAIStore';
-import { sendAIMessage, testConnection } from '../../services/ai';
+import { sendAIMessage, testConnection, FREE_MODELS } from '../../services/ai';
 import { buildDashboardContext, buildCustomerContext, buildSalesContext } from '../../utils/aiContext';
 import type { ChatMessage } from '../../types';
 
@@ -13,8 +13,6 @@ export default function AIChatWidget() {
   const { 
     apiKey, setApiKey, 
     model, setModel, 
-    temperature, setTemperature, 
-    maxTokens, setMaxTokens, 
     messages, addMessage, clearMessages, 
     isChatOpen, setChatOpen, 
     isSettingsOpen, setSettingsOpen 
@@ -107,7 +105,7 @@ export default function AIChatWidget() {
 
     try {
       const context = getPageContext();
-      const response = await sendAIMessage(message, context, apiKey, model, temperature, maxTokens);
+      const response = await sendAIMessage(message, context, apiKey, model);
 
       const aiMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
@@ -271,36 +269,18 @@ export default function AIChatWidget() {
                           color: 'var(--text-primary)', fontSize: 13, outline: 'none', boxSizing: 'border-box'
                         }}
                       >
-                        <option value="mistralai/mistral-7b-instruct:free">Mistral 7B (Free)</option>
-                        <option value="meta-llama/llama-3-8b-instruct:free">Llama 3 8B (Free)</option>
-                        <option value="google/gemma-7b-it:free">Gemma 7B (Free)</option>
-                        <option value="anthropic/claude-3-haiku">Claude 3 Haiku</option>
-                        <option value="openai/gpt-3.5-turbo">GPT-3.5 Turbo</option>
+                        {FREE_MODELS.map((m) => (
+                          <option key={m.id} style={{ background: '#1a080e', color: '#fff' }} value={m.id}>
+                            {m.name}
+                          </option>
+                        ))}
+                        <option disabled style={{ background: '#1a080e', color: '#888' }}>──────────</option>
+                        <option style={{ background: '#1a080e', color: '#fff' }} value="anthropic/claude-3-haiku">Claude 3 Haiku (Paid)</option>
+                        <option style={{ background: '#1a080e', color: '#fff' }} value="openai/gpt-3.5-turbo">GPT-3.5 Turbo (Paid)</option>
                       </select>
                     </div>
 
-                    <div style={{ marginBottom: 16 }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                        <label style={{ fontSize: 12, color: 'var(--text-muted)' }}>Temperature: {temperature}</label>
-                      </div>
-                      <input 
-                        type="range" min="0" max="2" step="0.1" 
-                        value={temperature} onChange={(e) => setTemperature(parseFloat(e.target.value))}
-                        style={{ width: '100%', accentColor: 'var(--accent-1)' }}
-                      />
-                    </div>
 
-                    <div style={{ marginBottom: 24 }}>
-                      <label style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)', marginBottom: 8 }}>Max Tokens</label>
-                      <input 
-                        type="number" value={maxTokens} onChange={(e) => setMaxTokens(parseInt(e.target.value))}
-                        style={{
-                          width: '100%', background: 'rgba(255,255,255,0.05)',
-                          border: '1px solid var(--glass-border)', borderRadius: 8, padding: '10px',
-                          color: 'var(--text-primary)', fontSize: 13, outline: 'none', boxSizing: 'border-box'
-                        }}
-                      />
-                    </div>
 
                     <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
                       <button 

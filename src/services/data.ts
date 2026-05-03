@@ -19,7 +19,12 @@ export async function loadCSVData(): Promise<SalesRecord[]> {
           sku: (row['SKU'] || '').trim(),
           rating: parseFloat(row['Rating']?.trim() || '0'),
           orderStatus: (row['Order Status'] || '').trim(),
-          paymentMethod: (row['Payment Method'] || '').trim(),
+          paymentMethod: ((pm) => {
+            if (pm.toLowerCase() === 'paypal') return 'PayPal';
+            if (pm.toLowerCase() === 'credit card') return 'Credit Card';
+            if (pm.toLowerCase() === 'debit card') return 'Debit Card';
+            return pm;
+          })((row['Payment Method'] || '').trim()),
           totalPrice: parseFloat(row['Total Price']?.trim() || '0'),
           unitPrice: parseFloat(row['Unit Price']?.trim() || '0'),
           quantity: parseInt(row['Quantity']?.trim() || '0'),

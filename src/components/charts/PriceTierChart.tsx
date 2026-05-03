@@ -28,7 +28,7 @@ export default function PriceTierChart({ data, delay = 0 }: { data: any[]; delay
             />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             <Bar yAxisId="left" dataKey="revenue" name="Revenue" fill="#10b981" radius={[4, 4, 0, 0]} />
-            <Line yAxisId="right" type="monotone" dataKey="avgRating" name="Average Rating" stroke="#f59e0b" strokeWidth={3} dot={{ r: 4 }} />
+            <Bar yAxisId="right" dataKey="avgRating" name="Average Rating" fill="#f59e0b" radius={[4, 4, 0, 0]} />
           </ComposedChart>
         </ResponsiveContainer>
       </motion.div>
