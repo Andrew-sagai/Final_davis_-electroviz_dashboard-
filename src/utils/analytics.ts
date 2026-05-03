@@ -104,10 +104,10 @@ export function getGenderComparison(data: SalesRecord[]) {
 }
 
 export function getLoyaltyTrend(data: SalesRecord[]) {
-  const map = new Map<string, { loyalSet: Set<string>; nonLoyalSet: Set<string> }>();
+  const map = new Map<string, { loyalSet: Set<number>; nonLoyalSet: Set<number> }>();
   data.forEach(r => {
     const m = r.purchaseDate.slice(0, 7);
-    const existing = map.get(m) || { loyalSet: new Set<string>(), nonLoyalSet: new Set<string>() };
+    const existing = map.get(m) || { loyalSet: new Set<number>(), nonLoyalSet: new Set<number>() };
     if (r.loyaltyMember === 'Yes') {
       existing.loyalSet.add(r.customerID);
     } else {
@@ -266,7 +266,7 @@ export function getCancellationByProduct(data: SalesRecord[]) {
 }
 
 export function getClvDistribution(data: SalesRecord[]) {
-  const customerMap = new Map<string, number>();
+  const customerMap = new Map<number, number>();
   data.forEach(r => {
     customerMap.set(r.customerID, (customerMap.get(r.customerID) || 0) + r.totalPrice);
   });
@@ -284,7 +284,7 @@ export function getClvDistribution(data: SalesRecord[]) {
 }
 
 export function getLoyaltyFunnel(data: SalesRecord[]) {
-  const customerMap = new Map<string, { orders: number; revenue: number; isLoyal: boolean }>();
+  const customerMap = new Map<number, { orders: number; revenue: number; isLoyal: boolean }>();
   data.forEach(r => {
     const existing = customerMap.get(r.customerID) || { orders: 0, revenue: 0, isLoyal: false };
     existing.orders += 1;
@@ -308,7 +308,7 @@ export function getLoyaltyFunnel(data: SalesRecord[]) {
 }
 
 export function getRepeatPurchaseDistribution(data: SalesRecord[]) {
-  const customerMap = new Map<string, number>();
+  const customerMap = new Map<number, number>();
   data.forEach(r => {
     customerMap.set(r.customerID, (customerMap.get(r.customerID) || 0) + 1);
   });
@@ -323,7 +323,7 @@ export function getRepeatPurchaseDistribution(data: SalesRecord[]) {
 }
 
 export function getCustomerRecency(data: SalesRecord[]) {
-  const customerMap = new Map<string, string>();
+  const customerMap = new Map<number, string>();
   let maxDate = '';
   data.forEach(r => {
     if (r.purchaseDate > maxDate) maxDate = r.purchaseDate;

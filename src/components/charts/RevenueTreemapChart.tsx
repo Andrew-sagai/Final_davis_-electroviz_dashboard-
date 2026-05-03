@@ -46,7 +46,6 @@ export default function RevenueTreemapChart({ data, delay = 0 }: { data: any[]; 
           <Treemap
             data={treeData}
             dataKey="size"
-            ratio={4 / 3}
             stroke="#fff"
             fill="#8b5cf6"
             content={<CustomizedContent />}
