@@ -12,7 +12,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       borderRadius: 16, padding: '10px 14px', backdropFilter: 'blur(16px)',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 42, 75, 0.2)'
     }}>
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#FFF0F2', marginBottom: 6 }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#ffffff', marginBottom: 6 }}>{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} style={{ fontSize: 11, color: entry.color, margin: '2px 0' }}>
           {entry.name}: {entry.value.toLocaleString()}
@@ -52,7 +52,7 @@ export default function LoyaltyTrendChart({ data, delay = 0 }: LoyaltyTrendChart
             <XAxis dataKey="month" tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <YAxis tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#FF8599' }} />
+            <Legend wrapperStyle={{ fontSize: 11, color: '#ffffff' }} />
             <Area type="monotone" dataKey="loyal" name="Loyalty Members" stroke="#00F0FF" strokeWidth={3} fill="url(#loyalGrad)" stackId="1" animationDuration={1500} />
             <Area type="monotone" dataKey="nonLoyal" name="Non-Members" stroke="#FF2A4B" strokeWidth={3} fill="url(#nonLoyalGrad)" stackId="1" animationDuration={1500} />
           </AreaChart>

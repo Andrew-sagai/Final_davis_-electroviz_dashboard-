@@ -14,7 +14,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       borderRadius: 16, padding: '10px 14px', backdropFilter: 'blur(16px)',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 42, 75, 0.2)'
     }}>
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#FFF0F2', marginBottom: 6 }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#ffffff', marginBottom: 6 }}>{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} style={{ fontSize: 11, color: entry.color || COLORS[0], margin: '2px 0' }}>
           {entry.name}: {entry.value.toLocaleString()}
@@ -44,7 +44,7 @@ export default function ShippingChart({ data, delay = 0 }: ShippingChartProps) {
             <XAxis dataKey="name" tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <YAxis tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 42, 75, 0.1)' }} />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#FF8599' }} />
+            <Legend wrapperStyle={{ fontSize: 11, color: '#ffffff' }} />
             <Bar dataKey="count" name="Orders" radius={[4, 4, 0, 0]} maxBarSize={40}>
               {data.map((_, i) => (
                 <Cell key={i} fill={COLORS[i % COLORS.length]} fillOpacity={0.8} />

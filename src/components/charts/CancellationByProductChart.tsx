@@ -4,6 +4,28 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { XCircle } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  const data = payload[0].payload;
+  return (
+    <div style={{
+      background: 'rgba(0,0,0,0.9)', 
+      border: '1px solid rgba(244,63,94,0.2)', 
+      borderRadius: 12,
+      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
+      padding: '10px 14px'
+    }}>
+      <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{label}</p>
+      <p style={{ color: '#fff', fontSize: 13, fontWeight: 500, margin: '2px 0' }}>
+        Cancellation Rate: {data.rate}%
+      </p>
+      <p style={{ color: '#fff', fontSize: 12, fontWeight: 400, margin: '2px 0' }}>
+        Cancelled: {data.cancelled} / {data.total} pesanan
+      </p>
+    </div>
+  );
+};
+
 export default function CancellationByProductChart({ data, delay = 0 }: { data: any[]; delay?: number }) {
   return (
     <GlassCard title="Tingkat Pembatalan per Kategori" subtitle="Persentase pesanan batal berdasar produk" icon={XCircle} delay={delay}>
@@ -13,18 +35,7 @@ export default function CancellationByProductChart({ data, delay = 0 }: { data: 
             <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.05)" horizontal={false} />
             <XAxis type="number" tick={{ fill: 'var(--text-muted)', fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
             <YAxis type="category" dataKey="product" tick={{ fill: '#f43f5e', fontSize: 11 }} width={80} />
-            <Tooltip 
-              contentStyle={{ 
-                background: 'rgba(0,0,0,0.9)', 
-                border: '1px solid rgba(244,63,94,0.2)', 
-                borderRadius: 12,
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.3)',
-                padding: '10px 14px'
-              }}
-              itemStyle={{ color: '#fff', fontSize: 13, fontWeight: 500 }}
-              labelStyle={{ color: 'rgba(255,255,255,0.6)', fontSize: 11, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.05em' }}
-              formatter={(value: any) => [`${value}%`, 'Cancellation Rate']}
-            />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 255, 255, 0.05)' }} />
             <Bar dataKey="rate" radius={[0, 4, 4, 0]}>
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.rate > 15 ? '#f43f5e' : entry.rate > 5 ? '#f59e0b' : '#10b981'} />

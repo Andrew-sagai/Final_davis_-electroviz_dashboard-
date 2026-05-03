@@ -15,7 +15,7 @@ const CustomTooltip = ({ active, payload }: any) => {
       borderRadius: 16, padding: '10px 14px', backdropFilter: 'blur(16px)',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 42, 75, 0.2)'
     }}>
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#FFF0F2', marginBottom: 2 }}>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#ffffff', marginBottom: 2 }}>
         {d.name}
       </p>
       <p style={{ fontSize: 11, color: '#FF8599' }}>
@@ -88,7 +88,7 @@ export default function PaymentPieChart({
             </Pie>
             <Tooltip content={<CustomTooltip />} />
             <Legend
-              wrapperStyle={{ fontSize: 12, paddingTop: 20 }}
+              wrapperStyle={{ fontSize: 12, paddingTop: 20, color: '#ffffff' }}
               iconType="circle"
               iconSize={10}
               layout="horizontal"

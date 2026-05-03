@@ -12,7 +12,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       borderRadius: 16, padding: '10px 14px', backdropFilter: 'blur(16px)',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
     }}>
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#FFF0F2', marginBottom: 6 }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#ffffff', marginBottom: 6 }}>{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} style={{ fontSize: 11, color: entry.color, margin: '2px 0' }}>
           {entry.name}: {entry.name === 'Revenue' ? `$${entry.value.toLocaleString()}` : entry.value.toLocaleString()}

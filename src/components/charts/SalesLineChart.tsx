@@ -12,7 +12,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       borderRadius: 16, padding: '10px 14px', backdropFilter: 'blur(16px)',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 42, 75, 0.2)'
     }}>
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#FFF0F2', marginBottom: 6 }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#ffffff', marginBottom: 6 }}>{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} style={{ fontSize: 11, color: entry.color, margin: '2px 0' }}>
           {entry.name}: {entry.name === 'Revenue' ? `$${entry.value.toLocaleString()}` : entry.value.toLocaleString()}
@@ -53,7 +53,7 @@ export default function SalesLineChart({ data, delay = 0 }: SalesLineChartProps)
             <YAxis yAxisId="left" tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} tickFormatter={(v) => `$${(v/1000).toFixed(0)}K`} />
             <YAxis yAxisId="right" orientation="right" tick={{ fill: '#00F0FF', fontSize: 11 }} axisLine={{ stroke: 'rgba(0, 240, 255, 0.2)' }} />
             <Tooltip content={<CustomTooltip />} />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#FF8599' }} />
+            <Legend wrapperStyle={{ fontSize: 11, color: '#ffffff' }} />
             <Line yAxisId="left" type="monotone" dataKey="revenue" name="Revenue" stroke="url(#lineGrad1)" strokeWidth={4} dot={{ r: 4, fill: '#FFB800' }} activeDot={{ r: 8, stroke: '#FFFFFF', strokeWidth: 2 }} />
             <Line yAxisId="right" type="monotone" dataKey="orders" name="Orders" stroke="url(#lineGrad2)" strokeWidth={3} dot={{ r: 3, fill: '#00F0FF' }} activeDot={{ r: 6 }} strokeDasharray="5 5" />
           </LineChart>

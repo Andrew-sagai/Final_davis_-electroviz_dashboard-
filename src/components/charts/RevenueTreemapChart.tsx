@@ -9,6 +9,23 @@ const COLORS = ['#8b5cf6', '#06b6d4', '#f43f5e', '#f59e0b', '#10b981', '#3b82f6'
 const CustomizedContent = (props: any) => {
   const { root, depth, x, y, width, height, index, payload, colors, rank, name } = props;
   
+  // Create a more robust hash for distinct colors based on name if index is not unique
+  const stringHash = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    return Math.abs(hash);
+  };
+  
+  // Use index if possible, otherwise fallback to hash
+  const colorIndex = (typeof index === 'number' ? index : stringHash(name || '')) % COLORS.length;
+  
+  // Only render distinct colors and text for leaf nodes
+  const isLeaf = !payload || !payload.children || payload.children.length === 0;
+  
+  if (!isLeaf) {
+    return null; // Don't draw anything for parent/root nodes
+  }
+  
   return (
     <g>
       <rect
@@ -17,14 +34,22 @@ const CustomizedContent = (props: any) => {
         width={width}
         height={height}
         style={{
-          fill: depth < 2 ? COLORS[index % COLORS.length] : 'rgba(255,255,255,0)',
-          stroke: '#fff',
-          strokeWidth: 2 / (depth + 1e-10),
-          strokeOpacity: 1 / (depth + 1e-10),
+          fill: COLORS[colorIndex],
+          stroke: 'rgba(0,0,0,0.5)',
+          strokeWidth: 2,
+          transition: 'all 0.3s ease',
         }}
       />
       {width > 50 && height > 30 && (
-        <text x={x + width / 2} y={y + height / 2} textAnchor="middle" fill="#fff" fontSize={12} fontWeight={600}>
+        <text 
+          x={x + width / 2} 
+          y={y + height / 2} 
+          textAnchor="middle" 
+          fill="#ffffff" 
+          fontSize={13} 
+          fontWeight={700}
+          style={{ pointerEvents: 'none', textShadow: '0px 2px 4px rgba(0,0,0,0.8)' }}
+        >
           {name}
         </text>
       )}
@@ -32,12 +57,28 @@ const CustomizedContent = (props: any) => {
   );
 };
 
+const CustomTooltip = ({ active, payload }: any) => {
+  if (!active || !payload?.length) return null;
+  const data = payload[0].payload;
+  return (
+    <div style={{
+      background: 'rgba(10, 4, 6, 0.95)', border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: 12, padding: '10px 14px', backdropFilter: 'blur(16px)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)'
+    }}>
+      <p style={{ fontSize: 13, fontWeight: 700, color: '#ffffff', marginBottom: 4 }}>
+        {data.name}
+      </p>
+      <p style={{ fontSize: 12, color: '#00F0FF', fontWeight: 600 }}>
+        Revenue: ${data.size?.toLocaleString()}
+      </p>
+    </div>
+  );
+};
+
 export default function RevenueTreemapChart({ data, delay = 0 }: { data: any[]; delay?: number }) {
-  // Recharts treemap expects a specific format
-  const treeData = [{
-    name: 'Products',
-    children: data.map(d => ({ name: d.product, size: d.revenue }))
-  }];
+  // Pass a flat array to Recharts Treemap to avoid the "Products" root node grouping
+  const treeData = data.map(d => ({ name: d.product, size: d.revenue }));
 
   return (
     <GlassCard title="Kontribusi Pendapatan" subtitle="Berdasarkan kategori produk" icon={PieChart} delay={delay}>
@@ -50,10 +91,7 @@ export default function RevenueTreemapChart({ data, delay = 0 }: { data: any[]; 
             fill="#8b5cf6"
             content={<CustomizedContent />}
           >
-            <Tooltip 
-              formatter={(value: any) => [`$${value.toLocaleString()}`, 'Revenue']}
-              contentStyle={{ background: 'rgba(0,0,0,0.8)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8 }}
-            />
+            <Tooltip content={<CustomTooltip />} />
           </Treemap>
         </ResponsiveContainer>
       </motion.div>

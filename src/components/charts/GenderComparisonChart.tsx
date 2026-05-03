@@ -19,7 +19,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       borderRadius: 16, padding: '10px 14px', backdropFilter: 'blur(16px)',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 42, 75, 0.2)'
     }}>
-      <p style={{ fontSize: 12, fontWeight: 700, color: '#FFF0F2', marginBottom: 6 }}>{label}</p>
+      <p style={{ fontSize: 12, fontWeight: 700, color: '#ffffff', marginBottom: 6 }}>{label}</p>
       {payload.map((entry: any, i: number) => (
         <p key={i} style={{ fontSize: 11, color: entry.fill || entry.color, margin: '2px 0' }}>
           {entry.name}: {typeof entry.value === 'number' && entry.value > 100 ? `$${entry.value.toLocaleString()}` : entry.value.toLocaleString()}
@@ -50,7 +50,7 @@ export default function GenderComparisonChart({ data, delay = 0 }: GenderCompari
             <YAxis yAxisId="left" tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} />
             <YAxis yAxisId="right" orientation="right" tick={{ fill: '#FF8599', fontSize: 11 }} axisLine={{ stroke: 'rgba(255, 42, 75, 0.2)' }} tickFormatter={(v) => `$${(v/1000).toFixed(0)}K`} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255, 42, 75, 0.1)' }} />
-            <Legend wrapperStyle={{ fontSize: 11, color: '#FF8599' }} />
+            <Legend wrapperStyle={{ fontSize: 11, color: '#ffffff' }} />
             <Bar yAxisId="left" dataKey="count" name="Orders" radius={[4, 4, 0, 0]} maxBarSize={40}>
               {data.map((d, i) => (
                 <Cell key={i} fill={GENDER_COLORS[d.gender] || '#8b5cf6'} fillOpacity={0.7} />

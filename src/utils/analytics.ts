@@ -58,7 +58,12 @@ export function getSalesByProductType(data: SalesRecord[]) {
 export function getPaymentMethodDistribution(data: SalesRecord[]) {
   const map = new Map<string, number>();
   data.forEach(r => {
-    map.set(r.paymentMethod, (map.get(r.paymentMethod) || 0) + 1);
+    let methodTitle = r.paymentMethod.trim();
+    if (methodTitle.toLowerCase() === 'paypal') methodTitle = 'PayPal';
+    else if (methodTitle.toLowerCase() === 'credit card') methodTitle = 'Credit Card';
+    else if (methodTitle.toLowerCase() === 'debit card') methodTitle = 'Debit Card';
+    
+    map.set(methodTitle, (map.get(methodTitle) || 0) + 1);
   });
   return Array.from(map.entries())
     .map(([name, value]) => ({ name, value }))

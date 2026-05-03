@@ -59,7 +59,7 @@ export default function Sales() {
 
   const salesKPIs = [
     { title: 'Total Revenue', value: kpis.totalRevenue, format: 'currency' as const, icon: TrendingUp, gradient: 'linear-gradient(135deg, #8b5cf6, #a78bfa)' },
-    { title: 'Total Products', value: productSales.length, format: 'number' as const, icon: Package, gradient: 'linear-gradient(135deg, #06b6d4, #67e8f9)' },
+    { title: 'Total Product per Kategori', value: productSales.length, format: 'number' as const, icon: Package, gradient: 'linear-gradient(135deg, #06b6d4, #67e8f9)' },
     { title: 'Shipping Methods', value: shippingDist.length, format: 'number' as const, icon: Truck, gradient: 'linear-gradient(135deg, #10b981, #34d399)' },
     { title: 'Add-on Types', value: addonsData.length, format: 'number' as const, icon: Gift, gradient: 'linear-gradient(135deg, #f59e0b, #fbbf24)' },
   ];
